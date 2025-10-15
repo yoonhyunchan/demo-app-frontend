@@ -20,7 +20,7 @@ export const App: React.FC = () => {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch(`${baseUrl}/api/todos`)
+      const res = await fetch(`${baseUrl}/todos`)
       if (!res.ok) throw new Error('Failed to load todos')
       const data: Todo[] = await res.json()
       setTodos(data)
@@ -37,7 +37,7 @@ export const App: React.FC = () => {
     if (!trimmed) return
     setError(null)
     try {
-      const res = await fetch(`${baseUrl}/api/todos`, {
+      const res = await fetch(`${baseUrl}/todos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: trimmed })
@@ -54,7 +54,7 @@ export const App: React.FC = () => {
 async function toggleTodo(todo: Todo) {
     setError(null)
     try {
-      const res = await fetch(`${baseUrl}/api/todos/${todo.id}`, {
+      const res = await fetch(`${baseUrl}/todos/${todo.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completed: !todo.completed })
@@ -70,7 +70,7 @@ async function toggleTodo(todo: Todo) {
   async function deleteTodo(id: number) {
     setError(null)
     try {
-      const res = await fetch(`${baseUrl}/api/todos/${id}`, { method: 'DELETE' })
+      const res = await fetch(`${baseUrl}/todos/${id}`, { method: 'DELETE' })
       if (!res.ok && res.status !== 204) throw new Error('Failed to delete todo')
       setTodos(prev => prev.filter(t => t.id !== id))
     } catch (e: any) {
